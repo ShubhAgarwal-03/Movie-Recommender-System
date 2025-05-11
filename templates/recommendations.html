@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Recommendations</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <!-- Dark mode toggle switch -->
+    <div class="theme-toggle">
+        <label class="switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider rounder"></span>
+        </label>
+    </div>
+
+    <!-- Main container -->
+    <div class="container">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+        <h2>Top Recommendations for User {{ user_id }}</h2>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+            {% for rec in recommendations %}
+                <div style="margin: 15px; text-align: center;">
+                    <img src="{{ rec.poster }}" alt="{{ rec.title }}"
+                     style="width: 200px; height: auto;"
+                     onerror="this.onerror=null; this.src='/static/no_poster.png';" />
+
+                    <p><strong>{{ rec.title }}</strong></p>
+                    <p>Predicted Rating: {{ "%.2f"|format(rec.rating) }}</p>
+                </div>
+            {% endfor %}      
+
+        </div>
+
+        <div style="margin-top: 20px;">
+            <a href="/" style="text-decoration: none; color: #007BFF;">← Go Back</a>
+        </div>
+    </div>
+
+    <!-- Dark mode script -->
+    <script>
+        const toggle = document.getElementById('darkModeToggle');
+        toggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+</body>
+</html>
