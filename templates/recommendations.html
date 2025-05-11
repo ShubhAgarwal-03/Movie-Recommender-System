@@ -15,9 +15,15 @@
         </label>
     </div>
 
+    <div style="margin-top: 20px;">
+        <a href="/search" class="button">🔍 Search for a Movie</a>
+    </div>
+    
+
+
     <!-- Main container -->
     <div class="container">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+        <img src="{{ url_for('static', filename='logo_movie.png') }}" alt="Logo" class="logo">
         <h2>Top Recommendations for User {{ user_id }}</h2>
 
         <div style="display: flex; flex-wrap: wrap; justify-content: center;">
@@ -35,7 +41,8 @@
         </div>
 
         <div style="margin-top: 20px;">
-            <a href="/" style="text-decoration: none; color: #007BFF;">← Go Back</a>
+            <!-- <a href="/" style="text-decoration: none; color: #007BFF;">← Go Back</a> -->
+            <a href="/" class="back-button">← Back to Home</a>
         </div>
     </div>
 

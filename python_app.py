@@ -20,15 +20,37 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return '''
-    <form action="/recommend" method="get">
-        Enter User ID: <input type="text" name="user_id">
-        <input type="submit" value="Get Recommendations">
-    </form>
-    '''
+    return render_template('home.html')
     
 #def home():
  #   return "Hello, this is your movie recommender!"
+
+
+@app.route('/search')
+def search():
+   return render_template('search.html')
+
+@app.route('/search_results', methods=['GET'])
+def search_results():
+    title = request.args.get('title', '').strip().lower()
+    if not title:
+        return render_template('error.html', message="No title provided")
+
+    matched_title = None
+    for movie in movie_id_to_title.values():
+        if title in movie.lower():
+            matched_title = movie
+            break
+
+    if matched_title:
+        poster_url = get_movie_poster(matched_title)
+        if not poster_url:
+            poster_url = url_for('static', filename='no_poster.png')
+        return render_template('movie_details.html', title=matched_title, poster=poster_url)
+    else:
+        return render_template('error.html', message="No matching movie found")
+
+
 
 @app.route('/recommend', methods=['GET'])
 def recommend():

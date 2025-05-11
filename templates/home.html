@@ -1,0 +1,73 @@
+<!-- Replace the current '/' return string with: -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Recommender - Enter User ID</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .form-container input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .form-container input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+     <!-- Dark mode toggle switch -->
+     <div class="theme-toggle">
+        <label class="switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider rounder"></span>
+        </label>
+    </div>
+
+
+    <div class="form-container">
+        <img src="{{ url_for('static', filename='logo_movie.png') }}" alt="Logo" class="logo">
+        <h2>Enter Your User ID</h2>
+        <form action="/recommend" method="get">
+            <input type="text" name="user_id" placeholder="e.g. 1">
+            <br>
+            <input type="submit" value="Get Recommendations">
+        </form>
+    </div>
+
+
+    <script>
+        const toggle = document.getElementById('darkModeToggle');
+        toggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+</body>
+</html>
