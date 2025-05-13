@@ -25,6 +25,7 @@ def cosine_similarity(item1, item2):
     #Calculation of cosinse similarity
     numerator = np.dot(item1_common, item2_common)
     denominator = np.linalg.norm(item1_common)* np.linalg.norm(item2_common)
+    #linalg is used to calculate the mod(scalar magnitude) of vectors
     
     return numerator/denominator if denominator !=0 else 0
 
@@ -68,9 +69,8 @@ def predict_rating_item_based(user_index, target_item_index, ratings_matrix, ite
     ratings_matrix = ratings_matrix.fillna(0)
     user_ratings = ratings_matrix.iloc[user_index]
     
-    #Step2: Find indices of items the user has rated
-    #rated_items_indices = np.where(user_ratings > 0)[0]
     
+    #Step2: Find indices of items the user has rated
     #rated_items_indices = user_ratings[user_ratings > 0][0]
     rated_items_indices = np.where(user_ratings > 0)[0]
        
