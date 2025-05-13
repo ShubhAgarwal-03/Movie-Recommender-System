@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Top Movies for New Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Popular Movies You Might Like</h2>
+        <div class="recommendations">
+            {% for movie in recommendations %}
+                <div class="card">
+                    <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="poster">
+                    <h4>{{ movie.title }}</h4>
+                    <p>Avg Rating: {{ movie.rating | round(2) }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <a href="/" class="btn">← Go Back</a>
+    </div>
+</body>
+</html>

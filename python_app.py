@@ -51,6 +51,11 @@ def search_results():
         return render_template('error.html', message="No matching movie found")
 
 
+def get_most_popular_movies(n=5):
+    avg_ratings = ratings_matrix.mean(axis=0).sort_values(ascending=False)
+    top_movie_ids = avg_ratings.head(n).index
+    return [(movie_id_to_title[mid], avg_ratings[mid]) for mid in top_movie_ids]
+
 
 @app.route('/recommend', methods=['GET'])
 def recommend():
@@ -60,6 +65,19 @@ def recommend():
     
      try:
         user_id_int = int(user_id)
+        
+        # 👇 Cold start fallback
+        if user_id_int not in user_id_to_index:
+            popular_movies = get_most_popular_movies(n=5)
+            rec_with_posters = []
+            for title, rating in popular_movies:
+                poster_url = get_movie_poster(title)
+                if not poster_url:
+                    poster_url = url_for('static', filename='no_poster.png')
+                rec_with_posters.append({"title": title, "rating": rating, "poster": poster_url})
+            return render_template("cold_start.html", recommendations=rec_with_posters)
+
+         # 👇 Normal flow for known users
         recommendations = recommend_items_hybrid(
             user_id=user_id_int,
             ratings_matrix=ratings_matrix,
